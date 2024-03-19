@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static '/style.css' %}" />
+    <title>Weather App</title>
+    <style>
+      .weather-side {
+        background-image: url("{% static 'images/' %}{{ background_image }}");
+        /* Other CSS styles for the container */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="weather-side">
+        <!-- <div class="weather-gradient"></div> -->
+
+        <div class="date-container">
+          <h2 class="date-dayname" id="date">{{date}}</h2>
+          <span class="date-day"></span>
+          <i class="location-icon" data-feather="map-pin"></i>
+          <span class="location">{{city}}, {{country}}</span>
+        </div>
+
+        <div class="weather-container">
+          <i class="weather-icon" data-feather="sun"></i>
+          <h1 class="weather-temp" id="weather-temp">{{temps.0}}°C</h1>
+          <h3 class="weather-desc">{{descs.0}}</h3>
+        </div>
+      </div>
+
+      <div class="info-side">
+        <div class="today-info-container">
+          <div class="today-info">
+            <div class="precipitation">
+              <span class="title">PRECIPITATION</span
+              ><span class="value">{{precips.0}} %</span>
+              <div class="clear"></div>
+            </div>
+
+            <div class="humidity">
+              <span class="title">HUMIDITY</span
+              ><span class="value">{{humids.0}} %</span>
+              <div class="clear"></div>
+            </div>
+
+            <div class="wind">
+              <span class="title">WIND</span
+              ><span class="value">{{winds.0}} km/h</span>
+              <div class="clear"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="week-container">
+          <ul class="week-list">
+            {% for day, temp in forecast_data %} {% if forloop.first %}
+            <li class="active" id="trigger-span">
+              <i class="day-icon" data-feather="sun"></i>
+              <span class="day-name">{{day}}</span>
+              <span class="day-temp">{{temp}}°C</span>
+            </li>
+            {% else %}
+            <li id="trigger-span">
+              <i class="day-icon" data-feather="cloud"></i>
+              <span class="day-name">{{day}}</span>
+              <span class="day-temp">{{temp}}°C</span>
+            </li>
+            {% endif %}
+            <!-- <li>
+              <i class="day-icon" data-feather="cloud-snow"> </i
+              ><span class="day-name">Thu</span>
+              <span class="day-temp">08°C</span>
+            </li>
+            <li>
+              <i class="day-icon" data-feather="cloud-rain"> </i
+              ><span class="day-name">Fry</span>
+              <span class="day-temp">19°C</span>
+            </li> -->
+            {% endfor %}
+            <div class="clear"></div>
+          </ul>
+        </div>
+
+        <form action="{% url 'weather_ui' %}" method="post">
+          {% csrf_token %} {% include 'search_button.html' %}
+        </form>
+      </div>
+    </div>
+
+    <script src="{% static 'js/main.js' %}"></script>
+  </body>
+</html>

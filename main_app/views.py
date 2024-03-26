@@ -4,9 +4,9 @@ import requests
 
 
 def weather_ui(request):
-    api_key = 'a6dc32b1f666823b735281757bbbfbd3'
+    api_key = 'your_api_key'
     city = request.POST.get('city') 
-    api_url = f'https://api.openweathermap.org/data/2.5/forecast?q={city}&appid={api_key}&units=metric'
+    api_url = f'your_api_url'
     response = requests.get(api_url)
     
     weekdays_abrv = []

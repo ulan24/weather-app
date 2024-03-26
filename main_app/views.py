@@ -113,7 +113,7 @@ def weather_ui(request):
             'today': today,
             'date': todays_date,
             'weekdays': weekdays_abrv,
-            "winds": winds,
+            "winds": winds, 
             "humids": humids,
             "precips": precips,
             "descs": descs,
